@@ -5,16 +5,31 @@ Turn any local git repository into an interactive 3D city - and watch it being b
 ![The OrderFlow repo growing from its first commit to today](docs/timeline.gif)
 
 Every **file is a building**, every **folder is a district** of streets. Tall buildings have lots of
-code, red ones change all the time, and arcs show who imports whom. The city looks like a real one
-windows, roads, parks, sky, street lamps at night but every wall colour is still data.
-No AI, no server, no internet: a small CLI scans the repo into a JSON file, and a static web page renders it.
+code, red ones change all the time, and arcs show who imports whom. The city looks like a real one,
+with windows, roads, parks, a sky and street lamps at night, but every wall colour is still data.
+
+No AI and no server: a small CLI scans the repo on your machine into a JSON file, and a static web
+page renders it. Everything works offline.
 
 | Dependencies of one file (orange = imports, teal = imported by, red = cycle) | Night mode: hot files glow |
 | --- | --- |
 | ![Dependency arcs](docs/dependencies.png) | ![Night mode](docs/night.png) |
 
-**Live demo: https://yasiruharinda.github.io/codecity/** — open the sample cities, or drag in a
+**Live demo: https://yasiruharinda.github.io/codecity/** - open the sample cities, or drag in a
 `city.json` you scanned yourself.
+
+## What you can do
+
+- **Explore** - orbit, zoom and pan around the city; hover a building for its name, click it for
+  details (lines, size, commits, top authors, created / last changed).
+- **Search** - type a file name and the camera flies to it.
+- **Recolour** - switch between churn (how often a file changes), language, and age (last change).
+- **Follow dependencies** - select a file to see arcs to what it imports and what imports it;
+  circular dependencies are flagged in red. "Show all dependencies" draws every arc at once.
+- **Time-travel** - with `--history`, press ▶ or drag the timeline: buildings grow, appear and vanish
+  as the repo evolves.
+- **Day / night** - at night windows light up, street lamps come on, and the most-changed files glow.
+- **Screenshot** - the 📷 button saves a PNG of the current view.
 
 ## Quick start
 
@@ -48,15 +63,16 @@ codecity scan <repo-path> [-o city.json] [--history [points]]
 | Building | One source file |
 | Height | Lines of code (non-blank), log scale |
 | Footprint | File size, log scale |
-| Colour | Switchable: **churn** (commits, blue → red), **language**, or **age** (last change, purple → orange) |
+| Wall colour | Switchable: **churn** (commits, blue → red), **language**, or **age** (last change, purple → orange) |
 | District | A folder: an asphalt block with streets between its sub-folders; nested folders sit a little higher |
 | Sidewalk | Where a folder's own files stand |
 | Parks | Leftover space (no data - just room the layout didn't need) |
 | Arcs | Imports between files (JS/TS, Python, C#); red = circular dependency |
-| Timeline | The repo at points in its git history; buildings grow, appear and vanish |
+| Timeline | The repo at points in its git history |
 
 **Controls:** drag to rotate · scroll to zoom · right-drag to pan · hover for a tooltip ·
-click a building for details · search to fly to a file · Esc to clear · `?debug` in the URL shows FPS and draw calls.
+click a building or block for details · Esc to clear · ☾ Night / ☀ Day · 📷 screenshot ·
+▶ play the timeline · add `?debug` to the URL to see FPS and draw calls.
 
 ## Architecture
 
@@ -64,7 +80,7 @@ click a building for details · search to fly to a file · Esc to clear · `?deb
 flowchart LR
     repo[(git repo)]
 
-    subgraph scanner["scanner/ — Node.js CLI"]
+    subgraph scanner["scanner/ - Node.js CLI"]
         walk["walk.ts<br/>git ls-files"] --> read["scan.ts<br/>read files, count LOC"]
         read --> parse["imports/*<br/>parse imports per language"]
         parse --> resolve["resolve to files<br/>+ Tarjan cycle search"]
@@ -74,9 +90,9 @@ flowchart LR
 
     json[["city.json<br/>(shared/types.ts)"]]
 
-    subgraph web["web/ — Vite + Three.js"]
-        layout["layout/treemapLayout.ts<br/>squarified treemap"] --> meshes["cityMeshes.ts<br/>2 InstancedMeshes"]
-        meshes --> viewer["viewer.ts<br/>camera, picking, bloom"]
+    subgraph web["web/ - Vite + Three.js"]
+        layout["layout/*<br/>treemap, streets, parks, lamps"] --> meshes["cityMeshes.ts<br/>InstancedMeshes + shaders"]
+        meshes --> viewer["viewer.ts<br/>camera, picking, sky, bloom"]
         deps["dependencies.ts + arcs.ts<br/>Bézier arcs"] --> viewer
         timeline["timeline.ts<br/>heights per snapshot"] --> viewer
         ui["ui/*<br/>search, panel, legend"] --> viewer
@@ -114,12 +130,13 @@ built and tested on its own.
 - **Rendering** - everything repeated is an `InstancedMesh` (one draw call for all buildings, one for
   all blocks, one for all trees…). Hover, selection and night-time glow are a per-instance `glow`
   attribute added to the standard shader. Bloom is `UnrealBloomPass`, used only at night.
-- **Realistic look, at no object cost** -
+- **Realistic look, at no object cost:**
   - **Windows** are a procedural texture: the building shader works out per pixel whether it's glass
     or wall from its position on the building, and fades the pattern when windows get smaller than a
     few pixels (no shimmering). At night a hash picks which windows are lit.
   - **Streets** come from the treemap itself: every cell is shrunk by half a road width, so a street
-    opens between neighbours with the old shared edge as its centre line.
+    opens between neighbours with the old shared edge as its centre line. Small blocks get narrower
+    alleys so their buildings aren't squeezed.
   - **Parks** fill free sidewalk space (a grid scan clear of buildings), within a tree budget.
   - **Sky** is a shader dome (gradient, sun/moon, stars); the same sky rendered with `PMREMGenerator`
     is the environment map that gives glass its reflections and the city its soft sky light.
@@ -134,7 +151,7 @@ Measured on a generated repo (`npm run make-test-repo`) with **10,041 files, 4.7
 | --- | --- | --- |
 | Scan (files, LOC, git stats, imports, cycles) | 4.8 s | < 30 s |
 | Scan with `--history 30` | 9.7 s | < 30 s |
-| Draw calls for the whole city | ~205 (instead of 10,000+) | - |
+| Draw calls for the whole city | ~210 (instead of 10,000+) | - |
 | Frame rate, **software rendering** (no GPU, headless Chrome) | 46–56 fps | 60 fps |
 | "Show all" with 24,125 arcs | built in 0.9 s, 35 fps (software) | - |
 
@@ -150,11 +167,16 @@ npx codecity scan ../big-repo -o samples/big.json --history
 
 ## Hosting on GitHub Pages
 
-`.github/workflows/pages.yml` tests, builds and publishes the viewer on every push to `main`.
-To host your own copy: fork the repo, then in **Settings → Pages** set **Source** to **GitHub Actions**.
-The site appears at `https://<you>.github.io/<repo>/`; the workflow sets Vite's `base` path from the
-repo name, so nothing needs editing. Every `.json` in `samples/` is published with it
-(open one with `?city=<name>.json`).
+`.github/workflows/pages.yml` runs the tests, builds the viewer and publishes it on every push to
+the main branch (`main` or `master`). To host your own copy:
+
+1. Fork the repo.
+2. In **Settings → Pages**, set **Source** to **GitHub Actions**.
+3. Push a commit (or run the workflow from the **Actions** tab).
+
+The site appears at `https://<you>.github.io/<repo>/`. The workflow sets Vite's `base` path from the
+repo name, so nothing needs editing. Every `.json` in `samples/` is published with it - open one with
+`?city=<name>.json`.
 
 ## Development
 
@@ -167,10 +189,11 @@ npm run scan -- <repo> -o samples/x.json   # run the scanner from source (no bui
 
 ```
 codecity/
+├─ .github/workflows/     GitHub Pages deploy
 ├─ shared/types.ts        the city.json schema
 ├─ scanner/               CLI: walk, loc, git, history, imports/, cycles
-├─ web/                   Vite + Three.js viewer: layout/, ui/, viewer, cityMeshes, arcs, timeline
-├─ samples/               example city files (served by the dev server)
+├─ web/                   Vite + Three.js viewer: layout/, ui/, viewer, cityMeshes, sky, arcs, timeline
+├─ samples/               example city files (served by the dev server and the live site)
 ├─ tools/make-test-repo.ts  generates a big fake repo for performance tests
 └─ docs/                  README images
 ```

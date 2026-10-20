@@ -1,10 +1,11 @@
-# Builds the web viewer and publishes it to GitHub Pages on every push to main.
+# Builds the web viewer and publishes it to GitHub Pages on every push to the main branch
+# (called "main" or "master", depending on how the repo was created).
 # One-time setup: repo Settings → Pages → Source: "GitHub Actions".
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch: # also allows a manual run from the Actions tab
 
 # The deploy step needs permission to publish to Pages.
