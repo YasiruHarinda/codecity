@@ -1,0 +1,495 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+  background: #dfe7ef;
+  color: #1d2733;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+}
+
+/* Shared look for the floating boxes. */
+.card {
+  position: fixed;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Top-left: title, search, colour modes ---------- */
+
+#hud {
+  top: 16px;
+  left: 16px;
+  width: 280px;
+}
+
+#hud h1 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+#hud p {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+#hud .hint {
+  margin: 10px 0 0;
+  color: #66717d;
+  font-size: 12px;
+}
+
+#hud .error {
+  color: #c62828;
+}
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+#search {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #c5ced8;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+}
+
+#search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin: 4px 0 0;
+  padding: 4px;
+  list-style: none;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+#search-results li {
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#search-results li.active,
+#search-results li:hover {
+  background: #e8efff;
+}
+
+#search-results strong {
+  display: block;
+  font-size: 13px;
+}
+
+#search-results span {
+  display: block;
+  color: #66717d;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#color-modes {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+#color-modes button {
+  flex: 1;
+  padding: 5px 0;
+  border: 1px solid #c5ced8;
+  background: white;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#color-modes button + button {
+  border-left: none;
+}
+
+#color-modes button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+#color-modes button:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+#color-modes button.active {
+  background: #2b6cff;
+  border-color: #2b6cff;
+  color: white;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#hud #cycles-summary {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.button {
+  display: inline-block;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #2b6cff;
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #1f56d6;
+}
+
+.button.secondary {
+  background: #e8eef7;
+  color: #1d2733;
+}
+
+.button.secondary:hover {
+  background: #d5dfee;
+}
+
+.button-row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Night theme: darker cards to match the dark sky. */
+body.night {
+  background: #0b1220;
+  color: #e6ecf5;
+}
+
+body.night .card {
+  background: rgba(20, 28, 44, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+body.night #hud .hint,
+body.night .legend-note,
+body.night .legend-sizes,
+body.night .legend-arcs,
+body.night .legend-labels,
+body.night .panel-subtitle,
+body.night #panel th {
+  color: #9aa7b8;
+}
+
+body.night #search,
+body.night #search-results,
+body.night #color-modes button:not(.active) {
+  background: #1b2538;
+  border-color: #33415a;
+  color: #e6ecf5;
+}
+
+body.night #search-results li.active,
+body.night #search-results li:hover {
+  background: #263552;
+}
+
+body.night .button.secondary {
+  background: #263552;
+  color: #e6ecf5;
+}
+
+body.night #panel th,
+body.night #panel td,
+body.night .legend-sizes {
+  border-color: #2a3650;
+}
+
+body.night .panel-files button {
+  color: #8fb3ff;
+}
+
+#debug {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #7CFC7C;
+  font: 12px ui-monospace, monospace;
+}
+
+/* ---------- Bottom-left: legend ---------- */
+
+#legend {
+  bottom: 16px;
+  left: 16px;
+  width: 280px;
+  font-size: 12px;
+}
+
+#legend h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+
+.legend-bar {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  color: #4a5562;
+}
+
+.legend-swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend-swatches li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.legend-swatches i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-note,
+.legend-sizes {
+  margin: 6px 0 0;
+  color: #66717d;
+}
+
+.legend-sizes {
+  padding-top: 6px;
+  border-top: 1px solid #e3e8ee;
+}
+
+.legend-arcs {
+  margin: 4px 0 0;
+  color: #66717d;
+}
+
+.legend-arcs i {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  margin: 0 4px 2px 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+/* ---------- Right: details panel ---------- */
+
+#panel {
+  top: 16px;
+  right: 16px;
+  width: 300px;
+  max-height: calc(100% - 64px);
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+#panel h2 {
+  margin: 0 24px 2px 0;
+  font-size: 16px;
+  word-break: break-all;
+}
+
+.panel-subtitle {
+  margin: 0 0 12px;
+  color: #66717d;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.panel-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #66717d;
+  cursor: pointer;
+}
+
+#panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#panel th,
+#panel td {
+  padding: 4px 0;
+  border-bottom: 1px solid #edf0f3;
+  text-align: left;
+  vertical-align: top;
+}
+
+#panel th {
+  width: 45%;
+  color: #4a5562;
+  font-weight: 500;
+}
+
+#panel h3 {
+  margin: 12px 0 4px;
+  font-size: 13px;
+}
+
+#panel ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.panel-fly {
+  margin-top: 12px;
+}
+
+.panel-cycle {
+  margin: 0 0 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b71c1c;
+  font-weight: 600;
+}
+
+.panel-files {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #66717d;
+}
+
+.panel-files li {
+  padding: 1px 0 1px 10px;
+  border-left: 3px solid;
+}
+
+/* The left border matches the arc colours (see ARC_COLORS in arcs.ts). */
+.panel-files.imports li {
+  border-color: #ff8a00;
+}
+
+.panel-files.importers li {
+  border-color: #00a3a3;
+}
+
+.panel-files.cycle li {
+  border-color: #e53935;
+}
+
+.panel-files button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #1f56d6;
+  font: inherit;
+  text-align: left;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.panel-files button:hover {
+  text-decoration: underline;
+}
+
+.panel-note {
+  margin: 0 0 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #eef3ff;
+  color: #1f3f8f;
+}
+
+/* ---------- Bottom-centre: timeline ---------- */
+
+#timeline {
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(560px, calc(100% - 640px));
+  min-width: 320px;
+}
+
+#play {
+  width: 36px;
+  padding: 6px 0;
+  text-align: center;
+}
+
+#time-slider {
+  flex: 1;
+}
+
+#time-label {
+  min-width: 150px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+#time-label small {
+  color: #66717d;
+  font-family: ui-monospace, monospace;
+}
+
+/* ---------- Tooltip that follows the mouse ---------- */
+
+#tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(20, 28, 38, 0.88);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none; /* never block the mouse from reaching the city */
+}

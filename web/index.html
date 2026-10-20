@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeCity 3D</title>
+    <!-- Empty icon, so the browser doesn't request a missing favicon.ico. -->
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Three.js puts its <canvas> in here. -->
+    <div id="app"></div>
+
+    <div id="hud" class="card">
+      <h1 id="repo-name">CodeCity 3D</h1>
+      <p id="stats">Loading…</p>
+
+      <div class="search-wrap">
+        <input id="search" type="search" placeholder="Search files…" autocomplete="off" spellcheck="false" />
+        <ul id="search-results" hidden></ul>
+      </div>
+
+      <div id="color-modes" role="group" aria-label="Colour mode">
+        <button data-mode="churn" class="active">Churn</button>
+        <button data-mode="language">Language</button>
+        <button data-mode="age">Age</button>
+      </div>
+
+      <label class="toggle">
+        <input id="show-all-deps" type="checkbox" />
+        <span id="deps-label">Show all dependencies</span>
+      </label>
+      <p id="cycles-summary" hidden></p>
+
+      <div class="button-row">
+        <label class="button">
+          Open city.json
+          <input id="file-input" type="file" accept=".json" hidden />
+        </label>
+        <button id="theme" class="button secondary">☾ Night</button>
+        <button id="screenshot" class="button secondary" title="Save a PNG of the current view">📷</button>
+      </div>
+      <p class="hint">Drag to rotate · scroll to zoom · right-drag to pan · click a building for details</p>
+    </div>
+
+    <div id="legend" class="card"></div>
+
+    <aside id="panel" class="card" hidden>
+      <button class="panel-close" aria-label="Close">×</button>
+      <h2 class="panel-title"></h2>
+      <p class="panel-subtitle"></p>
+      <div class="panel-body"></div>
+      <button class="button panel-fly">Fly to building</button>
+    </aside>
+
+    <div id="timeline" class="card" hidden>
+      <button id="play" class="button" aria-label="Play">▶</button>
+      <input id="time-slider" type="range" min="0" max="0" value="0" step="1" aria-label="Point in time" />
+      <span id="time-label"></span>
+    </div>
+
+    <div id="tooltip" hidden></div>
+    <div id="debug" hidden></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

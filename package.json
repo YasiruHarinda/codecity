@@ -1,0 +1,23 @@
+{
+  "name": "codecity-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "scanner",
+    "web"
+  ],
+  "scripts": {
+    "scan": "tsx scanner/src/cli.ts scan",
+    "dev": "npm run dev -w web --",
+    "build": "npm run build -w scanner && npm run build -w web",
+    "make-test-repo": "tsx tools/make-test-repo.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

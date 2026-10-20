@@ -1,0 +1,803 @@
+{
+  "version": 1,
+  "repoName": "codecity",
+  "scannedAt": "2026-10-20T06:40:23.588Z",
+  "fileSource": "git",
+  "git": null,
+  "cycles": [],
+  "root": {
+    "type": "folder",
+    "name": "codecity",
+    "path": "",
+    "loc": 5674,
+    "fileCount": 62,
+    "children": [
+      {
+        "type": "folder",
+        "name": "samples",
+        "path": "samples",
+        "loc": 680,
+        "fileCount": 3,
+        "children": [
+          {
+            "type": "file",
+            "name": "codecity.json",
+            "path": "samples/codecity.json",
+            "language": "JSON",
+            "loc": 678,
+            "bytes": 20709
+          },
+          {
+            "type": "file",
+            "name": "mini-git.json",
+            "path": "samples/mini-git.json",
+            "language": "JSON",
+            "loc": 1,
+            "bytes": 52592
+          },
+          {
+            "type": "file",
+            "name": "orderflow.json",
+            "path": "samples/orderflow.json",
+            "language": "JSON",
+            "loc": 1,
+            "bytes": 142884
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "scanner",
+        "path": "scanner",
+        "loc": 1734,
+        "fileCount": 25,
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "scanner/src",
+            "loc": 1146,
+            "fileCount": 14,
+            "children": [
+              {
+                "type": "folder",
+                "name": "imports",
+                "path": "scanner/src/imports",
+                "loc": 405,
+                "fileCount": 6,
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "csharp.ts",
+                    "path": "scanner/src/imports/csharp.ts",
+                    "language": "TypeScript",
+                    "loc": 91,
+                    "bytes": 4302,
+                    "imports": [
+                      "scanner/src/imports/strip.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "cycles.ts",
+                    "path": "scanner/src/imports/cycles.ts",
+                    "language": "TypeScript",
+                    "loc": 71,
+                    "bytes": 3242,
+                    "imports": []
+                  },
+                  {
+                    "type": "file",
+                    "name": "index.ts",
+                    "path": "scanner/src/imports/index.ts",
+                    "language": "TypeScript",
+                    "loc": 59,
+                    "bytes": 2951,
+                    "imports": [
+                      "scanner/src/imports/csharp.ts",
+                      "scanner/src/imports/cycles.ts",
+                      "scanner/src/imports/javascript.ts",
+                      "scanner/src/imports/python.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "javascript.ts",
+                    "path": "scanner/src/imports/javascript.ts",
+                    "language": "TypeScript",
+                    "loc": 53,
+                    "bytes": 3031,
+                    "imports": [
+                      "scanner/src/imports/strip.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "python.ts",
+                    "path": "scanner/src/imports/python.ts",
+                    "language": "TypeScript",
+                    "loc": 102,
+                    "bytes": 4965,
+                    "imports": [
+                      "scanner/src/imports/strip.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "strip.ts",
+                    "path": "scanner/src/imports/strip.ts",
+                    "language": "TypeScript",
+                    "loc": 29,
+                    "bytes": 1554,
+                    "imports": []
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "cli.ts",
+                "path": "scanner/src/cli.ts",
+                "language": "TypeScript",
+                "loc": 66,
+                "bytes": 3415,
+                "imports": [
+                  "scanner/src/scan.ts",
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "git.ts",
+                "path": "scanner/src/git.ts",
+                "language": "TypeScript",
+                "loc": 127,
+                "bytes": 5411,
+                "imports": [
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "history.ts",
+                "path": "scanner/src/history.ts",
+                "language": "TypeScript",
+                "loc": 196,
+                "bytes": 8558,
+                "imports": [
+                  "scanner/src/languages.ts",
+                  "scanner/src/loc.ts",
+                  "scanner/src/walk.ts",
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "languages.ts",
+                "path": "scanner/src/languages.ts",
+                "language": "TypeScript",
+                "loc": 69,
+                "bytes": 2035,
+                "imports": []
+              },
+              {
+                "type": "file",
+                "name": "loc.ts",
+                "path": "scanner/src/loc.ts",
+                "language": "TypeScript",
+                "loc": 19,
+                "bytes": 646,
+                "imports": []
+              },
+              {
+                "type": "file",
+                "name": "scan.ts",
+                "path": "scanner/src/scan.ts",
+                "language": "TypeScript",
+                "loc": 109,
+                "bytes": 4569,
+                "imports": [
+                  "scanner/src/git.ts",
+                  "scanner/src/history.ts",
+                  "scanner/src/imports/index.ts",
+                  "scanner/src/languages.ts",
+                  "scanner/src/loc.ts",
+                  "scanner/src/tree.ts",
+                  "scanner/src/walk.ts",
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "tree.ts",
+                "path": "scanner/src/tree.ts",
+                "language": "TypeScript",
+                "loc": 58,
+                "bytes": 2333,
+                "imports": [
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "walk.ts",
+                "path": "scanner/src/walk.ts",
+                "language": "TypeScript",
+                "loc": 97,
+                "bytes": 3600,
+                "imports": []
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "test",
+            "path": "scanner/test",
+            "loc": 568,
+            "fileCount": 10,
+            "children": [
+              {
+                "type": "file",
+                "name": "cycles.test.ts",
+                "path": "scanner/test/cycles.test.ts",
+                "language": "TypeScript",
+                "loc": 32,
+                "bytes": 1409,
+                "imports": [
+                  "scanner/src/imports/cycles.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "git.test.ts",
+                "path": "scanner/test/git.test.ts",
+                "language": "TypeScript",
+                "loc": 109,
+                "bytes": 4284,
+                "imports": [
+                  "scanner/src/git.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "history.test.ts",
+                "path": "scanner/test/history.test.ts",
+                "language": "TypeScript",
+                "loc": 99,
+                "bytes": 4684,
+                "imports": [
+                  "scanner/src/history.ts",
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "imports-csharp.test.ts",
+                "path": "scanner/test/imports-csharp.test.ts",
+                "language": "TypeScript",
+                "loc": 64,
+                "bytes": 3096,
+                "imports": [
+                  "scanner/src/imports/csharp.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "imports-js.test.ts",
+                "path": "scanner/test/imports-js.test.ts",
+                "language": "TypeScript",
+                "loc": 74,
+                "bytes": 2475,
+                "imports": [
+                  "scanner/src/imports/javascript.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "imports-python.test.ts",
+                "path": "scanner/test/imports-python.test.ts",
+                "language": "TypeScript",
+                "loc": 63,
+                "bytes": 2533,
+                "imports": [
+                  "scanner/src/imports/python.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "languages.test.ts",
+                "path": "scanner/test/languages.test.ts",
+                "language": "TypeScript",
+                "loc": 17,
+                "bytes": 726,
+                "imports": [
+                  "scanner/src/languages.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "loc.test.ts",
+                "path": "scanner/test/loc.test.ts",
+                "language": "TypeScript",
+                "loc": 25,
+                "bytes": 870,
+                "imports": [
+                  "scanner/src/loc.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "tree.test.ts",
+                "path": "scanner/test/tree.test.ts",
+                "language": "TypeScript",
+                "loc": 39,
+                "bytes": 1476,
+                "imports": [
+                  "scanner/src/tree.ts",
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "walk.test.ts",
+                "path": "scanner/test/walk.test.ts",
+                "language": "TypeScript",
+                "loc": 46,
+                "bytes": 1739,
+                "imports": [
+                  "scanner/src/walk.ts"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "package.json",
+            "path": "scanner/package.json",
+            "language": "JSON",
+            "loc": 20,
+            "bytes": 507
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "shared",
+        "path": "shared",
+        "loc": 109,
+        "fileCount": 1,
+        "children": [
+          {
+            "type": "file",
+            "name": "types.ts",
+            "path": "shared/types.ts",
+            "language": "TypeScript",
+            "loc": 109,
+            "bytes": 3670,
+            "imports": []
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "tools",
+        "path": "tools",
+        "loc": 126,
+        "fileCount": 1,
+        "children": [
+          {
+            "type": "file",
+            "name": "make-test-repo.ts",
+            "path": "tools/make-test-repo.ts",
+            "language": "TypeScript",
+            "loc": 126,
+            "bytes": 5406,
+            "imports": []
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "web",
+        "path": "web",
+        "loc": 2864,
+        "fileCount": 29,
+        "children": [
+          {
+            "type": "folder",
+            "name": "src",
+            "path": "web/src",
+            "loc": 2386,
+            "fileCount": 19,
+            "children": [
+              {
+                "type": "folder",
+                "name": "layout",
+                "path": "web/src/layout",
+                "loc": 327,
+                "fileCount": 4,
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "sizes.ts",
+                    "path": "web/src/layout/sizes.ts",
+                    "language": "TypeScript",
+                    "loc": 11,
+                    "bytes": 448,
+                    "imports": []
+                  },
+                  {
+                    "type": "file",
+                    "name": "squarify.ts",
+                    "path": "web/src/layout/squarify.ts",
+                    "language": "TypeScript",
+                    "loc": 101,
+                    "bytes": 4044,
+                    "imports": [
+                      "web/src/layout/types.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "treemapLayout.ts",
+                    "path": "web/src/layout/treemapLayout.ts",
+                    "language": "TypeScript",
+                    "loc": 173,
+                    "bytes": 7180,
+                    "imports": [
+                      "shared/types.ts",
+                      "web/src/layout/sizes.ts",
+                      "web/src/layout/squarify.ts",
+                      "web/src/layout/types.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "types.ts",
+                    "path": "web/src/layout/types.ts",
+                    "language": "TypeScript",
+                    "loc": 42,
+                    "bytes": 1231,
+                    "imports": [
+                      "shared/types.ts"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "ui",
+                "path": "web/src/ui",
+                "loc": 331,
+                "fileCount": 4,
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "format.ts",
+                    "path": "web/src/ui/format.ts",
+                    "language": "TypeScript",
+                    "loc": 19,
+                    "bytes": 820,
+                    "imports": []
+                  },
+                  {
+                    "type": "file",
+                    "name": "legend.ts",
+                    "path": "web/src/ui/legend.ts",
+                    "language": "TypeScript",
+                    "loc": 67,
+                    "bytes": 2640,
+                    "imports": [
+                      "web/src/arcs.ts",
+                      "web/src/colors.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "panel.ts",
+                    "path": "web/src/ui/panel.ts",
+                    "language": "TypeScript",
+                    "loc": 151,
+                    "bytes": 6238,
+                    "imports": [
+                      "shared/types.ts",
+                      "web/src/ui/format.ts"
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "search.ts",
+                    "path": "web/src/ui/search.ts",
+                    "language": "TypeScript",
+                    "loc": 94,
+                    "bytes": 3368,
+                    "imports": [
+                      "shared/types.ts"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "arcs.ts",
+                "path": "web/src/arcs.ts",
+                "language": "TypeScript",
+                "loc": 75,
+                "bytes": 3210,
+                "imports": []
+              },
+              {
+                "type": "file",
+                "name": "cityMeshes.ts",
+                "path": "web/src/cityMeshes.ts",
+                "language": "TypeScript",
+                "loc": 253,
+                "bytes": 11370,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/colors.ts",
+                  "web/src/labels.ts",
+                  "web/src/layout/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "colors.ts",
+                "path": "web/src/colors.ts",
+                "language": "TypeScript",
+                "loc": 129,
+                "bytes": 4828,
+                "imports": [
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "dependencies.ts",
+                "path": "web/src/dependencies.ts",
+                "language": "TypeScript",
+                "loc": 51,
+                "bytes": 1986,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/tree.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "labels.ts",
+                "path": "web/src/labels.ts",
+                "language": "TypeScript",
+                "loc": 50,
+                "bytes": 2512,
+                "imports": [
+                  "web/src/layout/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "loadCity.ts",
+                "path": "web/src/loadCity.ts",
+                "language": "TypeScript",
+                "loc": 17,
+                "bytes": 822,
+                "imports": [
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "main.ts",
+                "path": "web/src/main.ts",
+                "language": "TypeScript",
+                "loc": 303,
+                "bytes": 12646,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/arcs.ts",
+                  "web/src/colors.ts",
+                  "web/src/dependencies.ts",
+                  "web/src/layout/sizes.ts",
+                  "web/src/loadCity.ts",
+                  "web/src/timeline.ts",
+                  "web/src/tree.ts",
+                  "web/src/ui/legend.ts",
+                  "web/src/ui/panel.ts",
+                  "web/src/ui/search.ts",
+                  "web/src/viewer.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "style.css",
+                "path": "web/src/style.css",
+                "language": "CSS",
+                "loc": 417,
+                "bytes": 7470
+              },
+              {
+                "type": "file",
+                "name": "timeline.ts",
+                "path": "web/src/timeline.ts",
+                "language": "TypeScript",
+                "loc": 90,
+                "bytes": 3630,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/tree.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "tree.ts",
+                "path": "web/src/tree.ts",
+                "language": "TypeScript",
+                "loc": 10,
+                "bytes": 366,
+                "imports": [
+                  "shared/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "viewer.ts",
+                "path": "web/src/viewer.ts",
+                "language": "TypeScript",
+                "loc": 333,
+                "bytes": 15165,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/arcs.ts",
+                  "web/src/cityMeshes.ts",
+                  "web/src/colors.ts",
+                  "web/src/layout/treemapLayout.ts",
+                  "web/src/tree.ts"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "test",
+            "path": "web/test",
+            "loc": 383,
+            "fileCount": 6,
+            "children": [
+              {
+                "type": "file",
+                "name": "colors.test.ts",
+                "path": "web/test/colors.test.ts",
+                "language": "TypeScript",
+                "loc": 69,
+                "bytes": 2723,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/colors.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "dependencies.test.ts",
+                "path": "web/test/dependencies.test.ts",
+                "language": "TypeScript",
+                "loc": 52,
+                "bytes": 1864,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/dependencies.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "search.test.ts",
+                "path": "web/test/search.test.ts",
+                "language": "TypeScript",
+                "loc": 27,
+                "bytes": 1180,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/ui/search.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "squarify.test.ts",
+                "path": "web/test/squarify.test.ts",
+                "language": "TypeScript",
+                "loc": 54,
+                "bytes": 2300,
+                "imports": [
+                  "web/src/layout/squarify.ts",
+                  "web/src/layout/types.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "timeline.test.ts",
+                "path": "web/test/timeline.test.ts",
+                "language": "TypeScript",
+                "loc": 70,
+                "bytes": 2900,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/timeline.ts",
+                  "web/src/tree.ts"
+                ]
+              },
+              {
+                "type": "file",
+                "name": "treemapLayout.test.ts",
+                "path": "web/test/treemapLayout.test.ts",
+                "language": "TypeScript",
+                "loc": 111,
+                "bytes": 5730,
+                "imports": [
+                  "shared/types.ts",
+                  "web/src/layout/sizes.ts",
+                  "web/src/layout/treemapLayout.ts",
+                  "web/src/layout/types.ts"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "index.html",
+            "path": "web/index.html",
+            "language": "HTML",
+            "loc": 58,
+            "bytes": 2442
+          },
+          {
+            "type": "file",
+            "name": "package.json",
+            "path": "web/package.json",
+            "language": "JSON",
+            "loc": 18,
+            "bytes": 316
+          },
+          {
+            "type": "file",
+            "name": "tsconfig.json",
+            "path": "web/tsconfig.json",
+            "language": "JSON",
+            "loc": 13,
+            "bytes": 316
+          },
+          {
+            "type": "file",
+            "name": "vite.config.ts",
+            "path": "web/vite.config.ts",
+            "language": "TypeScript",
+            "loc": 6,
+            "bytes": 227,
+            "imports": []
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "name": "package.json",
+        "path": "package.json",
+        "language": "JSON",
+        "loc": 23,
+        "bytes": 551
+      },
+      {
+        "type": "file",
+        "name": "README.md",
+        "path": "README.md",
+        "language": "Markdown",
+        "loc": 125,
+        "bytes": 7157
+      },
+      {
+        "type": "file",
+        "name": "tsconfig.json",
+        "path": "tsconfig.json",
+        "language": "JSON",
+        "loc": 13,
+        "bytes": 296
+      }
+    ]
+  }
+}
