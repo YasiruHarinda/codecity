@@ -1,17 +1,20 @@
 # CodeCity 3D
 
-Turn any local git repository into an interactive 3D city — and watch it being built over time.
+Turn any local git repository into an interactive 3D city - and watch it being built over time.
 
 ![The OrderFlow repo growing from its first commit to today](docs/timeline.gif)
 
 Every **file is a building**, every **folder is a district** of streets. Tall buildings have lots of
-code, red ones change all the time, and arcs show who imports whom. The city looks like a real one —
-windows, roads, parks, sky, street lamps at night — but every wall colour is still data.
+code, red ones change all the time, and arcs show who imports whom. The city looks like a real one
+windows, roads, parks, sky, street lamps at night but every wall colour is still data.
 No AI, no server, no internet: a small CLI scans the repo into a JSON file, and a static web page renders it.
 
 | Dependencies of one file (orange = imports, teal = imported by, red = cycle) | Night mode: hot files glow |
 | --- | --- |
 | ![Dependency arcs](docs/dependencies.png) | ![Night mode](docs/night.png) |
+
+**Live demo: https://yasiruharinda.github.io/codecity/** — open the sample cities, or drag in a
+`city.json` you scanned yourself.
 
 ## Quick start
 
@@ -48,7 +51,7 @@ codecity scan <repo-path> [-o city.json] [--history [points]]
 | Colour | Switchable: **churn** (commits, blue → red), **language**, or **age** (last change, purple → orange) |
 | District | A folder: an asphalt block with streets between its sub-folders; nested folders sit a little higher |
 | Sidewalk | Where a folder's own files stand |
-| Parks | Leftover space (no data — just room the layout didn't need) |
+| Parks | Leftover space (no data - just room the layout didn't need) |
 | Arcs | Imports between files (JS/TS, Python, C#); red = circular dependency |
 | Timeline | The repo at points in its git history; buildings grow, appear and vanish |
 
@@ -89,29 +92,29 @@ built and tested on its own.
 
 ### How it works
 
-- **File list** — `git ls-files --cached --others --exclude-standard` lets git apply every
+- **File list** - `git ls-files --cached --others --exclude-standard` lets git apply every
   `.gitignore` rule; folders that aren't repos fall back to a disk walk with the `ignore` package.
   Binary files are detected by a zero byte in the first 8 KB.
-- **Git stats** — one `git log --numstat` for the whole repo, streamed line by line, instead of one
+- **Git stats** - one `git log --numstat` for the whole repo, streamed line by line, instead of one
   `git log` per file.
-- **Layout** — a nested [squarified treemap](https://www.win.tue.nl/~vanwijk/stm.pdf): rows are grown
+- **Layout** - a nested [squarified treemap](https://www.win.tue.nl/~vanwijk/stm.pdf): rows are grown
   along the shorter side while that makes the worst aspect ratio better. A folder's own files are
   grouped into one "lot", and tiny blocks next to huge siblings get a minimum share, so no building
   is squeezed into a sliver.
-- **Imports** — regex parsers (comments stripped first) for JS/TS, Python and C#, separated from the
+- **Imports** - regex parsers (comments stripped first) for JS/TS, Python and C#, separated from the
   resolvers so they could be swapped for Tree-sitter. C# `using`s import namespaces, so a file only
   links to files that declare a type it actually mentions (and parts of a `partial class` aren't linked
   to each other).
-- **Cycles** — Tarjan's strongly-connected-components algorithm, written without recursion so a
+- **Cycles** - Tarjan's strongly-connected-components algorithm, written without recursion so a
   50,000-file import chain can't overflow the stack.
-- **History** — commits are sampled evenly in time along `--first-parent`; `git ls-tree` lists each
+- **History** - commits are sampled evenly in time along `--first-parent`; `git ls-tree` lists each
   snapshot and one long-running `git cat-file --batch` reads file contents. A blob ID is a hash of the
   content, so each unique version is counted once across all snapshots. Every file that ever existed is
   laid out, so buildings never jump around while you scrub the timeline.
-- **Rendering** — everything repeated is an `InstancedMesh` (one draw call for all buildings, one for
+- **Rendering** - everything repeated is an `InstancedMesh` (one draw call for all buildings, one for
   all blocks, one for all trees…). Hover, selection and night-time glow are a per-instance `glow`
   attribute added to the standard shader. Bloom is `UnrealBloomPass`, used only at night.
-- **Realistic look, at no object cost** —
+- **Realistic look, at no object cost** -
   - **Windows** are a procedural texture: the building shader works out per pixel whether it's glass
     or wall from its position on the building, and fades the pattern when windows get smaller than a
     few pixels (no shimmering). At night a hash picks which windows are lit.
@@ -131,19 +134,27 @@ Measured on a generated repo (`npm run make-test-repo`) with **10,041 files, 4.7
 | --- | --- | --- |
 | Scan (files, LOC, git stats, imports, cycles) | 4.8 s | < 30 s |
 | Scan with `--history 30` | 9.7 s | < 30 s |
-| Draw calls for the whole city | ~205 (instead of 10,000+) | — |
+| Draw calls for the whole city | ~205 (instead of 10,000+) | - |
 | Frame rate, **software rendering** (no GPU, headless Chrome) | 46–56 fps | 60 fps |
-| "Show all" with 24,125 arcs | built in 0.9 s, 35 fps (software) | — |
+| "Show all" with 24,125 arcs | built in 0.9 s, 35 fps (software) | - |
 
 These frame rates were measured before the realistic look was added. Windows, streets and parks
 cost no measurable frame rate; the sky reflections and street lamps cost about 10–15% in software
-rendering (measured side by side). With a real GPU the frame rate is higher — open any city with
+rendering (measured side by side). With a real GPU the frame rate is higher - open any city with
 `?debug` to see FPS and draw calls on your machine. To reproduce:
 
 ```bash
 npm run make-test-repo -- ../big-repo --files 10400 --commits 30
 npx codecity scan ../big-repo -o samples/big.json --history
 ```
+
+## Hosting on GitHub Pages
+
+`.github/workflows/pages.yml` tests, builds and publishes the viewer on every push to `main`.
+To host your own copy: fork the repo, then in **Settings → Pages** set **Source** to **GitHub Actions**.
+The site appears at `https://<you>.github.io/<repo>/`; the workflow sets Vite's `base` path from the
+repo name, so nothing needs editing. Every `.json` in `samples/` is published with it
+(open one with `?city=<name>.json`).
 
 ## Development
 
